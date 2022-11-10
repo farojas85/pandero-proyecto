@@ -3,7 +3,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "postinstall": "npm run production"
+        "postinstall": "yarn build"
     },
     "devDependencies": {
         "@inertiajs/inertia": "^0.11.0",
