@@ -2,9 +2,6 @@ import { defineConfig, loadEnv } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 
-// console.log(import.meta.env.VITE_APP_ENV)
-
-
 export default ({mode}) => {
 
     const env = loadEnv(mode, process.cwd(), '')
