@@ -5,7 +5,7 @@ import LayoutLogin from '@/Layouts/AppLoginLayout.vue'
 
 import Login from '../Pages/Auth/Login.vue'
 import Principal from '../Pages/Principal.vue'
-import Sistema from '../Pages/sistema/Inicio.vue'
+import Sistema from '../Pages/Sistema/Inicio.vue'
 
 const routes = [
     {
