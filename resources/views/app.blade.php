@@ -5,9 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-        <meta http-equiv="Content-Security-Policy" content="block-all-mixed-content">
-
         <title>{{ config('app.name', 'Sistema Sufragio') }}</title>
 
         {{-- <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/ico/favicon.ico') }}"> --}}
