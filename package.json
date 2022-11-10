@@ -2,8 +2,7 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
-        "postinstall": "yarn build"
+        "build": "vite build"
     },
     "devDependencies": {
         "@inertiajs/inertia": "^0.11.0",
@@ -23,10 +22,5 @@
     "dependencies": {
         "sweetalert2": "^11.6.7",
         "vue-router": "^4.1.6"
-    },
-    "engines": {
-        "node": "18.x",
-        "npm": "8.19.2",
-        "yarn": "1.14.0"
     }
 }
