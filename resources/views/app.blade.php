@@ -6,6 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+        <meta http-equiv="Content-Security-Policy" content="block-all-mixed-content">
 
         <title>{{ config('app.name', 'Sistema Sufragio') }}</title>
 
