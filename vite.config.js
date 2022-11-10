@@ -7,9 +7,8 @@ import vue from '@vitejs/plugin-vue';
 
 export default ({mode}) => {
 
-    process.env = Object.assign(process.env, loadEnv(mode, process.cwd(), ''));
-
-    const envo = process.env.APP_ENV =='local' ? false : true
+    const env = loadEnv(mode, process.cwd(), '')
+    const envo = env.VITE_APP_ENV == 'local' ? false : true
 
     return defineConfig({
         plugins: [
