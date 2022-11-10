@@ -4,8 +4,8 @@ import vue from '@vitejs/plugin-vue';
 
 export default ({mode}) => {
 
-    const env = loadEnv(mode, process.cwd(), '')
-    const envo = env.VITE_APP_ENV == 'local' ? false : true
+    // const env = loadEnv(mode, process.cwd(), '')
+    // const envo = env.VITE_APP_ENV == 'local' ? false : true
 
     return defineConfig({
         plugins: [
@@ -23,7 +23,7 @@ export default ({mode}) => {
             }),
         ],
         server:{
-            https: envo
+            //https: envo
         }
     });
 }
