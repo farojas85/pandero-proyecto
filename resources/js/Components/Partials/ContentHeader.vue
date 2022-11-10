@@ -17,7 +17,6 @@
             </div>
             <!-- /.row -->
         </div>
-        <!-- /.container-fluid -->
     </div>
 </template>
 

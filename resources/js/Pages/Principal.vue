@@ -76,11 +76,20 @@
     </section>
 </template>
 
-<script setup>
-    import ContentHeader from '@/Components/partials/ContentHeader.vue'
-    import  { toRefs } from 'vue'
-    import uSeAutentication from '@/Composables/autenticacion'
+<script>
+import ContentHeader from '@/Components/Partials/ContentHeader.vue'
+import  { toRefs } from 'vue'
+import uSeAutentication from '@/Composables/autenticacion'
+export default {
+    components:{
+        ContentHeader
+    },
+    setup() {
+        const titulo = "Dashboard"
 
-    const titulo = "Dashboard"
-
+        return {
+            titulo
+        }
+    },
+}
 </script>
