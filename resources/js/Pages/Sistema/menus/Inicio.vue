@@ -176,7 +176,7 @@ export default {
         MenuForm
     },
     setup() {
-        const { defineTitle } = useHelper()
+        const { defineTitle,Swal, Toast } = useHelper()
 
         const {
             errors, menus, obtenerMenus, obtenerMenu, menu, eliminarPermanenteMenu,

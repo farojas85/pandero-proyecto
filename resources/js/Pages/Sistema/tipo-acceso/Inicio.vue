@@ -163,7 +163,7 @@ export default {
         TipoAccesoForm
     },
     setup() {
-        const { defineTitle } = useHelper()
+        const { defineTitle,Swal, Toast  } = useHelper()
 
         const {
             tipoAcceso, tipoAccesos, errors, obtenerTipoAccesos, obtenerTipoAcceso,

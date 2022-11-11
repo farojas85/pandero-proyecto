@@ -69,7 +69,7 @@ export default {
     emits:['onTipoAcceso'],
     setup(props,{ emit }) {
         const { form } = toRefs(props)
-        const { slugify } = useHelper()
+        const { slugify,Swal, Toast } = useHelper()
         const { errors, agregarTipoAcceso, taRespuesta, actualizarTipoAcceso } = useTipoAcceso()
 
         const agregar = async() => {

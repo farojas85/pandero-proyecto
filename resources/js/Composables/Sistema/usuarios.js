@@ -17,7 +17,9 @@ export default function useUsuario() {
     }
 
     const obtenerUsuarios = async(data) => {
-        let respuesta = await axios.get('api/usuarios-'+data.show_tipo,{ params: data},config)
+        let datos = 'page='+data.page+'&paginacion='+data.paginacion+
+                    '&buscar='+data.buscar
+        let respuesta = await axios.get('api/usuarios-'+data.show_tipo+'?'+datos,config)
         usuarios.value =respuesta.data
     }
 

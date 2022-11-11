@@ -178,7 +178,7 @@
             RoleForm
         },
         setup() {
-            const { defineTitle } = useHelper()
+            const { defineTitle,Swal, Toast } = useHelper()
 
             const {
                 role, roles, errors, datoRole, respuesta, obtenerRoles, obtenerRole,

@@ -93,7 +93,7 @@ export default {
     emits:['onMenus'],
     setup(props,{emit}) {
         const { form } = toRefs(props)
-        const { slugify } = useHelper()
+        const { slugify,Swal, Toast } = useHelper()
         const {
             errors, padres, obtenerPadres, respuesta, agregarMenu, actualizarMenu
         } = useMenu()

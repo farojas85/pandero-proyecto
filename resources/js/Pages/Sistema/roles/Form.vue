@@ -84,7 +84,7 @@ export default {
     emits:['onRoles'],
     setup(props, { emit }) {
         const { form } = toRefs(props)
-        const { slugify } = useHelper()
+        const { slugify,Swal, Toast } = useHelper()
         const { errors, agregarRole, respuesta, actualizarRole } = useRole()
         const { tipoAccesos, listarTipoAccesos } = useTipoAcceso()
 
