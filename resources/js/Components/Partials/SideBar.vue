@@ -38,7 +38,7 @@
             </div> -->
 
             <!-- Sidebar Menu -->
-            <!-- <nav class="mt-2">
+            <nav class="mt-2">
                <ul class="nav nav-pills nav-sidebar flex-column"
                     data-widget="treeview" role="menu" data-accordion="false" >
                     <li class="nav-header">MEN&Uacute; PRINCIPAL</li>
@@ -49,7 +49,7 @@
                         </a>
                     </li>
                 </ul>
-            </nav> -->
+            </nav>
         </div>
     </aside>
 </template>
