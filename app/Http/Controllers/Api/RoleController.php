@@ -110,6 +110,9 @@ class RoleController extends Controller
                     ->withTrashed()
                     ->first()
         ;
+
+        $role->es_activo = 1;
+        $role->save();
         $role->restore();
 
         return response()->json([

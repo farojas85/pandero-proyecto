@@ -6,7 +6,7 @@ export default function useHelper() {
     const dias = ref([])
 
     const defineTitle = (title) => {
-        let sistema = "Prestamos";
+        let sistema = "Pandero";
         document.title = title +" | "+sistema
     }
 

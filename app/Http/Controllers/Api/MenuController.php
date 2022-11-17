@@ -128,6 +128,10 @@ class MenuController extends Controller
                     ->withTrashed()
                     ->first()
         ;
+
+        $menu->es_activo =1;
+        $menu->save();
+
         $menu->restore();
 
         return response()->json([

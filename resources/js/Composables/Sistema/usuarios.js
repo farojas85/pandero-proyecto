@@ -16,6 +16,10 @@ export default function useUsuario() {
         }
     }
 
+    const verificarNumeroDocumento = async(datos) => {
+        return (await axios.post('/api/verificar-numero-documento',datos)).data
+    }
+
     const obtenerUsuarios = async(data) => {
         let datos = 'page='+data.page+'&paginacion='+data.paginacion+
                     '&buscar='+data.buscar
@@ -23,7 +27,21 @@ export default function useUsuario() {
         usuarios.value =respuesta.data
     }
 
+    const guardarUsuario = async(datos) => {
+        return (await axios.post('/api/usuarios',datos)).data
+    }
+
+    const mostrarUsuario = async(id) => {
+        return(await axios.get('/api/usuario-mostrar',{ params: {id:id}})).data
+    }
+
+    const actualizarUsuario = async(datos) => {
+        return (await axios.put('/api/usuario'))
+    }
+
     return {
-        usuarios, obtenerUsuarios, errors, usuario
+        usuarios, errors, usuario,
+        obtenerUsuarios, verificarNumeroDocumento, guardarUsuario, mostrarUsuario,
+        actualizarUsuario
     }
 }

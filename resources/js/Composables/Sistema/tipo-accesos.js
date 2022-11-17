@@ -24,7 +24,7 @@ export default function useUsuario() {
     }
 
     const obtenerTipoAcceso = async(id) => {
-        let respuesta = await axios.get('api/tipo-accesos-mostrar/',{params:{id:id}},config)
+        let respuesta = await axios.get('api/tipo-accesos-mostrar?id='+id,config)
         tipoAcceso.value = respuesta.data
     }
 

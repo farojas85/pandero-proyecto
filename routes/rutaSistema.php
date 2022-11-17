@@ -13,6 +13,10 @@ Route::group(['middleware' > ['auth:sanctum']],function(){
     Route::get('usuarios-habilitados',[UserController::class,'habilitados']);
     Route::get('usuarios-eliminados',[UserController::class,'eliminados']);
     Route::get('usuarios-todos',[UserController::class,'todos']);
+    Route::post('verificar-numero-documento',[UserController::class,'verificarNumeroDocumento']);
+    Route::get('usuarios-mostrar',[UserController::class,'show'])->name('usuarios.mostrar');
+    Route::get('usuarios-actualizar',[UserController::class,'update'])->name('usuarios.actualizar');
+
     //TIPO ACCESOS
     Route::get('tipo-accesos-habilitados',[TipoAccesoController::class,'habilitados']);
     Route::get('tipo-accesos-eliminados',[TipoAccesoController::class,'eliminados']);

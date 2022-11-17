@@ -25,7 +25,7 @@ export default function useMenu() {
     }
 
     const obtenerMenu = async(id) => {
-        let responded = await axios.get('api/menus-mostrar',{params:{id:id}},config)
+        let responded = await axios.get('api/menus-mostrar?id='+id,config)
         menu.value = responded.data
     }
 
@@ -79,7 +79,7 @@ export default function useMenu() {
     }
 
     const verificarEnRolMenu = async(id) => {
-        const respond = await axios.get('api/menus-verificar-enrol',{params:{id:id}},config)
+        const respond = await axios.get('api/menus-verificar-enrol?id='+id,config)
         if(respond.data)
         {
             respuesta.value = respond.data

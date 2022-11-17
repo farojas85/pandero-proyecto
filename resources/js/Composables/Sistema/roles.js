@@ -24,7 +24,7 @@ export default function useRole() {
     }
 
     const obtenerRole = async(id) => {
-        let responded = await axios.get('api/roles-mostrar/',{params:{id:id}},config)
+        let responded = await axios.get('api/roles-mostrar?id='+id,config)
         role.value = responded.data
     }
 

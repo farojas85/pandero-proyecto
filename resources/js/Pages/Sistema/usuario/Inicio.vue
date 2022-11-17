@@ -91,16 +91,22 @@
             </div>
         </div>
     </div>
+
+    <usuario-form :form="form" @onUsuarios="listarUsuarios"></usuario-form>
 </template>
 
 <script>
 import { onMounted, computed, ref } from 'vue'
 import useHelper from '@/Helpers'
 import useUsuario from '@/Composables/Sistema/usuarios'
+import UsuarioForm from './Form.vue'
 
 export default {
+    components:{
+        UsuarioForm
+    },
     setup() {
-        const { defineTitle } = useHelper()
+        const { defineTitle,Swal, Toast  } = useHelper()
 
         const {
             usuarios, usuario, errors, obtenerUsuarios
@@ -115,6 +121,26 @@ export default {
             buscar : '',
             show_tipo : 'habilitados',
             paginacion : 5
+        })
+
+        const form = ref({
+            id:'',
+            name:'',
+            email:'',
+            password:'',
+            foto:'user-male.png',
+            role_id:'',
+            activo:true,
+            tipo_documento_id:'',
+            numero_documento:'',
+            nombres:'',
+            apellido_paterno:'',
+            apellido_materno:'',
+            direccion:'',
+            telefono:'',
+            sexo_id:'',
+            estadoCrud:'nuevo',
+            errors:[]
         })
 
         const listarUsuarios = async(page=1) => {
@@ -145,9 +171,14 @@ export default {
             listarUsuarios()
         }
 
+        const nuevo = () => {
+            $('.modal-title-usuario').html('Nuevo Usuario')
+            $('#modal-usuario').modal('show')
+        }
+
         return {
-            dato, usuario, usuarios, obtenerUsuarios, errors, listarUsuarios,
-            mostrarHabilitados, mostrarEliminados, mostrarTodos
+            dato, usuario, usuarios,  errors, form,
+            listarUsuarios,obtenerUsuarios,mostrarHabilitados, mostrarEliminados, mostrarTodos
         }
     },
 }

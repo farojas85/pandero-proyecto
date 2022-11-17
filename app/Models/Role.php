@@ -13,6 +13,10 @@ class Role extends Model
 {
     use HasFactory, SoftDeletes, MenuFacadeTrait;
 
+    protected $fillable = [
+        'nombre', 'slug', 'tipo_acceso_id', 'es_activo'
+    ];
+
     /**
      * Get the tipoo_acceso that owns the Role
      *
