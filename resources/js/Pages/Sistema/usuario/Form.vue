@@ -1,6 +1,6 @@
 <template>
     <form id="form-usuarios" @submit.prevent="guardar">
-        <div  class="modal" id="modal-usuario" tabindex="-1" role="dialog"
+        <div  class="modal fade" id="modal-usuario" tabindex="-1" role="dialog"
         aria-labelledby="ultraModal-Label" aria-hidden="true">
             <div class="modal-dialog animated bounceInDown modal-xl">
                 <div class="modal-content">
@@ -11,11 +11,11 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <section class="box primary">
-                                    <header class="panel_header ui-sortable-handle">
-                                        <h2 class="title float-left">Datos Personales</h2>
-                                    </header>
-                                    <div class="content-body">
+                                <div class="card card-primary border border-primary">
+                                    <div class="card-header">
+                                        <h2 class="card-title">Datos Personales</h2>
+                                    </div>
+                                    <div class="card-body">
                                         <div class="form-group row">
                                             <label class="col-form-label col-form-label-sm col-md-3 font-weight-bold"
                                                 title="Tipo Documento">
@@ -28,7 +28,8 @@
                                                         id="tipo_documento_id" @change="cambiarTipo"
                                                         :disabled="form.estadoCrud=='mostrar'">
                                                     <option value="">-Seleccionar-</option>
-                                                    <option v-for="t in tipoDocumentos" :key="t.id" :value="t.id">
+                                                    <option v-for="t in tipo_documentos" :key="t.id" :value="t.id"
+                                                        :title="t.nombre_largo">
                                                         {{ t.nombre_corto}}
                                                     </option>
                                                 </select>
@@ -44,7 +45,7 @@
                                                 <input type="text" class="form-control form-control-sm"
                                                     v-model="form.numero_documento" placeholder="Ingrese Número de Documento" maxlength="15"
                                                     :class="{ 'is-invalid': form.errors.numero_documento }"
-                                                    id="numero_documento" @change="verificarNumeroDocumento"
+                                                    id="numero_documento" @change="obtenerDatoDocumento"
                                                     :disabled="form.estadoCrud=='mostrar'"/>
                                                     <small class="text-danger" v-for="error in form.errors.numero_documento" :key="error">{{ error }}</small>
                                             </div>
@@ -105,7 +106,6 @@
                                                     </option>
                                                 </select>
                                                 <small class="text-danger" v-for="error in form.errors.sexo_id" :key="error">{{ error }}</small>
-
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -131,18 +131,18 @@
                                             </div>
                                         </div>
                                     </div>
-                                </section>
+                                </div>
                             </div>
                             <div class="col-md-6">
-                            <section class="box purple">
-                                <header class="panel_header ui-sortable-handle">
-                                    <h2 class="title float-left">Datos form</h2>
-                                </header>
-                                <div class="content-body">
+                            <div class="card card-danger border border-danger">
+                                <div class="card-header">
+                                    <h2 class="card-title">Datos Usuario</h2>
+                                </div>
+                                <div class="card-body">
                                         <div class="form-group row">
                                             <label class="col-form-label col-form-label-sm col-md-3 font-weight-bold"
                                                 title="Nombre form">
-                                                form
+                                                Nombre Usuario
                                             </label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control form-control-sm"
@@ -175,11 +175,11 @@
                                                     <input type="password" class="form-control" v-model="form.password"
                                                         placeholder="Ingrese Contraseña"
                                                         :class="{ 'is-invalid': form.errors.password }"/>
-                                                    <div class="input-group-append cursor-pointer">
+                                                    <!-- <div class="input-group-append cursor-pointer">
                                                         <span class="input-group-text" >
                                                             <i class="fas fa-eye text-secondary"></i>
                                                         </span>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                                 <small class="text-danger" v-for="error in form.errors.password" :key="error">{{ error }}</small>
                                             </div>
@@ -187,18 +187,18 @@
                                         <div class="form-group row" v-if="form.estadoCrud!='mostrar'">
                                             <label class="col-form-label col-form-label-sm col-md-3 font-weight-bold"
                                                 title="Confirmar Contraseña">
-                                                Confirma Contrase&ntilde;a
+                                                Confirmar
                                             </label>
                                             <div class="col-md-8">
                                                 <div class="input-group input-group-sm">
                                                     <input type="password" class="form-control" v-model="form.password_confirmation"
-                                                        placeholder="Ingrese Contraseña"
+                                                        placeholder="Confirmar Contraseña"
                                                         :class="{ 'is-invalid': form.errors.password_confirmation }"/>
-                                                    <div class="input-group-append cursor-pointer">
+                                                    <!-- <div class="input-group-append cursor-pointer">
                                                         <span class="input-group-text" >
                                                             <i class="fas fa-eye text-secondary"></i>
                                                         </span>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                                 <small class="text-danger" v-for="error in form.errors.password_confirmation" :key="error">{{ error }}</small>
                                             </div>
@@ -227,9 +227,9 @@
                                                 Estado
                                             </label>
                                             <div class="col-md-6">
-                                                <input type="checkbox" v-model="form.activo"
-                                                    :disabled="form.estadoCrud=='mostrar'" />&nbsp;
-                                                <label v-if="form.activo" class="col-form-label col-form-label-sm text-success font-weight-bold">
+                                                <input type="checkbox" v-model="form.es_activo"
+                                                    :disabled="form.estadoCrud=='mostrar'" :checked="form.es_activo==1" />&nbsp;
+                                                <label v-if="form.es_activo" class="col-form-label col-form-label-sm text-success font-weight-bold">
                                                     Activo
                                                 </label>
                                                 <label v-else class="col-form-label col-form-label-sm text-secondary font-weight-bold">
@@ -238,7 +238,7 @@
                                             </div>
                                         </div>
                                 </div>
-                                </section>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -258,7 +258,9 @@
 </template>
 
 <script>
-import { toRefs } from 'vue'
+import { toRefs, onMounted } from 'vue'
+import useHelper from '@/Helpers'
+import useUsuario from '@/Composables/Sistema/usuarios'
 export default {
     props:{
         form: Object
@@ -268,13 +270,85 @@ export default {
 
         const { form } = toRefs(props)
 
-        const guardar = () => {
+        const { Swal  } = useHelper()
+
+        const {
+            tipo_documentos, sexos, roles, datoPersona, errors, respuesta,
+            obtenerTipoDocumentos, obtenerSexos, obtenerRoles, verificarNumeroDocumento,
+            agregarUsuario
+        } = useUsuario()
+
+        onMounted(() => {
+            obtenerTipoDocumentos()
+            obtenerSexos()
+            obtenerRoles()
+        })
+
+        const obtenerDatoDocumento = async () => {
+            await verificarNumeroDocumento(form.value)
+            if(errors.value)
+            {
+                form.value.errors = errors.value
+            }
+            if(datoPersona.value)
+            {
+                switch(datoPersona.value.tipo)
+                {
+                    case 0:
+                        form.value.nombres = datoPersona.value.nombres
+                        form.value.apellido_paterno = datoPersona.value.apellido_paterno
+                        form.value.apellido_materno = datoPersona.value.apellido_materno
+                        form.value.sexo_id = datoPersona.value.sexo_id
+                        form.value.telefono = datoPersona.value.telefono
+                        form.value.direccion = datoPersona.value.direccion
+                        ; break;
+                    case 1:
+                        form.value.nombres = datoPersona.value.nombres
+                        form.value.apellido_paterno = datoPersona.value.apellidoPaterno
+                        form.value.apellido_materno = datoPersona.value.apellidoMaterno
+                        ; break;
+                    case 2:
+                        form.value.nombres = datoPersona.value.razonSocial
+                        ; break;
+                }
+            }
+        }
+
+        const agregar = async() => {
+            await agregarUsuario(form.value)
+            if(errors.value )
+            {
+                form.value.errors = errors.value
+            }
+
+            if(respuesta.value.ok==1){
+                $('#modal-usuario').modal('hide')
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: respuesta.value.mensaje,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                emit('onUsuarios')
+            }
+        }
+
+        const actualizar = async() => {
 
         }
 
+        const guardar = () => {
+            switch(form.value.estadoCrud)
+            {
+                case 'nuevo': agregar(); break;
+                case 'editar': actualizar(); break;
+            }
+        }
+
         return {
-            form,
-            guardar
+            form, tipo_documentos, sexos, roles,
+            guardar, obtenerDatoDocumento
         }
     },
 }

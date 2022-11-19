@@ -4,7 +4,7 @@
             <h6 class="card-title">
                 Listado Usuarios&nbsp;
                 <a class="btn btn-danger btn-sm"
-                    @click.prevent="">
+                    @click.prevent="nuevo">
                     <i class="fa fa-plus"></i>
                 </a>
             </h6>
@@ -82,6 +82,12 @@
                                         <span class="badge bg-secondary" v-else>Inactivo</span>
                                     </td>
                                     <td>
+                                        <button class="btn btn-warning btn-xs mr-1" title="Editar Rol" @click.prevent="editar(usuario.id)">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-xs mr-1" title="Enviar a Papelera" @click.prevent="eliminar(usuario.id, 'Temporal')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -106,7 +112,7 @@ export default {
         UsuarioForm
     },
     setup() {
-        const { defineTitle,Swal, Toast  } = useHelper()
+        const { defineTitle, Swal, Toast  } = useHelper()
 
         const {
             usuarios, usuario, errors, obtenerUsuarios
@@ -128,9 +134,9 @@ export default {
             name:'',
             email:'',
             password:'',
-            foto:'user-male.png',
+            foto:'user_varon.png',
             role_id:'',
-            activo:true,
+            es_activo:true,
             tipo_documento_id:'',
             numero_documento:'',
             nombres:'',
@@ -171,14 +177,44 @@ export default {
             listarUsuarios()
         }
 
+        const limpiarDatos = () => {
+
+            form.value.id= ''
+            form.value.name= ''
+            form.value.email= ''
+            form.value.password= ''
+            form.value.foto= 'user_varon.png'
+            form.value.role_id= ''
+            form.value.es_activo= true
+            form.value.tipo_documento_id= ''
+            form.value.numero_documento= ''
+            form.value.nombres= ''
+            form.value.apellido_paterno= ''
+            form.value.apellido_materno= ''
+            form.value.direccion= ''
+            form.value.telefono= ''
+            form.value.sexo_id= ''
+            form.value.estadoCrud= ''
+            form.value.errors= []
+        }
+
         const nuevo = () => {
-            $('.modal-title-usuario').html('Nuevo Usuario')
+            limpiarDatos()
+            form.value.estadoCrud = 'nuevo'
+            $('#modal-title-usuario').html('Nuevo Usuario')
             $('#modal-usuario').modal('show')
         }
 
+        const editar = () => {
+
+        }
+        const eliminar = () => {
+
+        }
         return {
             dato, usuario, usuarios,  errors, form,
-            listarUsuarios,obtenerUsuarios,mostrarHabilitados, mostrarEliminados, mostrarTodos
+            listarUsuarios,obtenerUsuarios,mostrarHabilitados, mostrarEliminados, mostrarTodos,
+            nuevo, editar, eliminar
         }
     },
 }

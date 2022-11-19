@@ -13,7 +13,7 @@ class Persona extends Model
     use HasFactory;
 
     protected $fillable = [
-        'tipo_documento_id', 'numero_documento', 'nombres', 'apellidos',
+        'tipo_documento_id', 'numero_documento', 'nombres', 'apellido_paterno',' apellido_materno',
         'sexo_id', 'direccion', 'telefono'
     ];
 

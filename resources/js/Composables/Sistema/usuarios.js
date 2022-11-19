@@ -6,8 +6,11 @@ export default function useUsuario() {
     const errors = ref([])
     const usuario = ref({})
     const usuarios = ref([])
+    const tipo_documentos = ref([])
+    const sexos = ref([])
+    const roles = ref([])
     const datoPersona = ref({})
-    const usuRespuesta= ref('')
+    const respuesta= ref('')
     const router = useRouter()
 
     const config = {
@@ -17,7 +20,18 @@ export default function useUsuario() {
     }
 
     const verificarNumeroDocumento = async(datos) => {
-        return (await axios.post('/api/verificar-numero-documento',datos)).data
+        errors.value = []
+        try {
+
+            let respuesta = await axios.post('api/verificar-numero-documento',datos,config)
+            datoPersona.value = respuesta.data
+        }
+        catch (error) {
+            errors.value=""
+            if(error.response.status === 422) {
+                errors.value = error.response.data.errors
+            }
+        }
     }
 
     const obtenerUsuarios = async(data) => {
@@ -27,8 +41,35 @@ export default function useUsuario() {
         usuarios.value =respuesta.data
     }
 
-    const guardarUsuario = async(datos) => {
-        return (await axios.post('/api/usuarios',datos)).data
+    const obtenerTipoDocumentos = async () => {
+        let respuesta = await axios.get('api/tipo-documentos-listar',config)
+        tipo_documentos.value = respuesta.data
+    }
+
+    const obtenerSexos = async() => {
+        let respuesta = await axios.get('api/sexos-listar',config)
+        sexos.value = respuesta.data
+    }
+
+    const obtenerRoles = async() => {
+        let respuesta = await axios.get('api/roles-listar',config)
+        roles.value = respuesta.data
+    }
+
+    const agregarUsuario = async(data) => {
+        errors.value = ''
+        try {
+            let respond = await axios.post('api/usuarios',data,config)
+            errors.value =''
+            respuesta.value = respond.data
+
+        } catch (error) {
+            errors.value=""
+            if(error.response.status === 422) {
+                errors.value = error.response.data.errors
+            }
+        }
+
     }
 
     const mostrarUsuario = async(id) => {
@@ -40,8 +81,9 @@ export default function useUsuario() {
     }
 
     return {
-        usuarios, errors, usuario,
-        obtenerUsuarios, verificarNumeroDocumento, guardarUsuario, mostrarUsuario,
-        actualizarUsuario
+        usuarios, errors, usuario, tipo_documentos, sexos, roles, datoPersona,
+        respuesta,
+        obtenerUsuarios, verificarNumeroDocumento, agregarUsuario, mostrarUsuario,
+        actualizarUsuario, obtenerTipoDocumentos, obtenerSexos, obtenerRoles
     }
 }

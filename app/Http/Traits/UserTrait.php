@@ -5,8 +5,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\TipoDocumento;
+use App\Models\Persona;
 use Peru\Jne\DniFactory;
 use Peru\Sunat\RucFactory;
+
 
 trait UserTrait
 {
@@ -78,6 +80,7 @@ trait UserTrait
         //VALIDAMOS EL TIPO DE DOCUMENTO
         $regla = [ 'tipo_documento_id' => 'required'];
         $mensaje = [ 'required' => '* Dato Obligatorio'];
+
         $this->validate($request,$regla,$mensaje);
 
         //VALIDAMOS EL NUMERO DE DOCUMENTO POR LONGITUD
@@ -94,18 +97,24 @@ trait UserTrait
         $this->validate($request,$regla,$mensaje);
 
         $persona = null;
+
         if($digitos == 8)
         {
-
             $factory = new DniFactory();
             $cs = $factory->create();
 
             $persona = $cs->get($request->numero_documento);
-            if (!$persona) {
+
+            if(!$persona) {
                 return null;
+            }
+            if($persona)
+            {
+                $persona->tipo = 1;
             }
 
             return  json_encode($persona);
+
         }
         else if($digitos == 11) {
 
@@ -114,11 +123,36 @@ trait UserTrait
 
             $persona = $cs->get($request->numero_documento);
 
-            if (!$persona) {
+            if(!$persona) {
                 return null;
             }
 
+            if($persona)
+            {
+                $persona->tipo = 2;
+            }
+
             return json_encode($persona);
+
+        } else {
+            $persona = Persona::select(
+                'tipo_documento_id','numero_documento', 'nombres', 'apellido_paterno',
+                'apellido_materno', 'sexo_id', 'telefono', 'direccion'
+            )->where('dni', $request->numero_documento)
+            ->first();
+
+
+            if(!$persona)
+            {
+                return null;
+            }
+
+            if($persona)
+            {
+                $persona['tipo'] = 0;
+            }
+
+            return $persona;
         }
     }
 }
