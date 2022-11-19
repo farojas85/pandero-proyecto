@@ -90,6 +90,54 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6">
+                    Mostrando <b>{{participantes.from}}</b> a <b>{{ participantes.to }}</b> de <b>{{ participantes.total}}</b> Registros
+                </div>
+                <div class="col-md-6 text-right">
+                    <nav>
+                        <ul class="pagination">
+                            <li v-if="participantes.current_page >= 2" class="page-item">
+                                <a href="#" aria-label="Previous" class="page-link"
+                                    title="Primera Página"
+                                    @click.prevent="cambiarPagina(1)">
+
+                                    <span><i class="fas fa-backward-fast"></i></span>
+                                </a>
+                            </li>
+                            <li v-if="participantes.current_page > 1" class="page-item">
+                                <a href="#" aria-label="Previous" class="page-link"
+                                    title="Página Anterior"
+                                    @click.prevent="cambiarPagina(participantes.current_page - 1)">
+
+                                    <span><i class="fas fa-angle-left"></i></span>
+                                </a>
+                            </li>
+                            <li v-for="page in pagesNumber()" class="page-item"
+                                :key="page"
+                                :class="[ page == isActived() ? 'active' : '']"
+                                :title="'Página '+ page">
+                                <a href="#" class="page-link"
+                                    @click.prevent="cambiarPagina(page)">{{ page }}</a>
+                            </li>
+                            <li v-if="participantes.current_page < participantes.last_page" class="page-item">
+                                <a href="#" aria-label="Next" class="page-link"
+                                    title="Página Siguiente"
+                                    @click.prevent="cambiarPagina(participantes.current_page + 1)">
+                                    <span aria-hidden="true"><i class="fas fa-angle-right"></i></span>
+                                </a>
+                            </li>
+                                <li v-if="participantes.current_page <= participantes.last_page-1" class="page-item">
+                                <a href="#" aria-label="Next" class="page-link"
+                                    @click.prevent="cambiarPagina(participantes.last_page)"
+                                    title="Última Página">
+                                    <span aria-hidden="true"><i class="fas fa-forward-fast"></i></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
         </div>
     </div>
     <participante-form :form="form" @onParticipantes="listarParticipantes"></participante-form>
@@ -126,14 +174,10 @@ export default {
 
         const form = ref({
             id:'',
-            tipo_documento_id:'',
-            numero_documento:'',
-            nombres:'',
-            apellido_paterno:'',
-            apellido_materno:'',
-            direccion:'',
-            telefono:'',
-            sexo_id:'',
+            descripcion:'',
+            monto:'',
+            fecha_inicio:'',
+            es_activo:1,
             estadoCrud:'nuevo',
             errors:[]
         })
@@ -174,6 +218,43 @@ export default {
             //dato.value.buscar = event.target.value
             listarParticipantes()
         }
+
+        const isActived = () => {
+            return participantes.value.current_page
+        }
+
+        const pagesNumber = () => {
+            if(!participantes.value.to){
+                return []
+            }
+
+            let from = participantes.value.current_page - offset
+
+            if(from < 1) from = 1
+
+            let to = from + (offset*2)
+
+            if( to >= participantes.value.last_page) to = participantes.value.last_page
+
+            let pagesArray = []
+
+            while(from <= to) {
+                pagesArray.push(from)
+                from ++
+            }
+
+            return pagesArray
+        }
+
+        const cambiarPagina = (pagina) =>{
+            participantes.value.current_page = pagina
+            listar(pagina)
+        }
+
+        computed(() => {
+            isActived()
+            pagesNumber()
+        })
 
         const limpiarDatos = () => {
             form.value.id =""
@@ -249,7 +330,7 @@ export default {
         return {
             dato, form, participantes, errors,
             listarParticipantes, cambiarPaginacion, mostrarHabilitados, mostrarEliminados, mostrarTodos,
-            buscar, nuevo, mostrar, editar, eliminar
+            buscar, nuevo, mostrar, editar, eliminar, cambiarPagina, isActived, pagesNumber
         }
     },
 }
