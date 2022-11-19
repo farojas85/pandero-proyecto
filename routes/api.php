@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\MenuController;
+use App\Http\Controllers\Api\ParticipanteController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SexoController;
 use App\Http\Controllers\Api\TipoAccesoController;
@@ -26,7 +27,10 @@ Route::group(['middleware' => ['auth:sanctum']],function(){
     Route::apiResource('menus',MenuController::class);
     Route::apiResource('tipo-documentos',TipoDocumentoController::class);
     Route::apiResource('sexos',SexoController::class);
+    Route::apiResource('participantes',ParticipanteController::class);
+
 
     require __DIR__.'/rutaSistema.php';
     require __DIR__.'/rutaConfiguraciones.php';
+    require __DIR__.'/rutaPanderos.php';
 });
